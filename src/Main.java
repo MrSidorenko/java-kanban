@@ -1,3 +1,9 @@
+import manager.TaskManager;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+import tasks.TaskStatus;
+
 public class Main {
     public static void main(String[] args) {
         TaskManager manager = new TaskManager();
@@ -42,7 +48,7 @@ public class Main {
 
         // Вывод всех задач
         System.out.println("Все задачи после обновления:");
-        for (Task task : manager.getAllTasks()) {
+        for (Task task : manager.getAllItems()) {
             System.out.println(task.getType() + " " + task.getTitle() + " - " + task.getStatus());
         }
     }
