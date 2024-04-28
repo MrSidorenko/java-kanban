@@ -64,19 +64,15 @@ public class TaskManager {
     public void updateEpic(Epic updatedEpic) {
         Epic existingEpic = epics.get(updatedEpic.getId());
         if (existingEpic == null) {
+            System.out.println("Эпик с ID " + updatedEpic.getId() + " не найден.");
             return;
         }
 
-        // Создаем новый эпик с переданными параметрами
-        Epic newEpic = new Epic(updatedEpic.getTitle(), updatedEpic.getDescription());
-        newEpic.setId(updatedEpic.getId()); // Устанавливаем тот же ID
+        existingEpic.setTitle(updatedEpic.getTitle());
+        existingEpic.setDescription(updatedEpic.getDescription());
 
 
-        // копируем список подзадач из существующего эпика
-        newEpic.getSubtaskIds().addAll(existingEpic.getSubtaskIds());
-
-        // Заменяем старый эпик на новый в мапе
-        epics.put(updatedEpic.getId(), newEpic);
+        System.out.println("Информация эпика успешно обновлена.");
     }
 // - 3
 
@@ -122,7 +118,7 @@ public class TaskManager {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
             epic.addSubtask(id);
-            updateEpic(epic);
+            updateEpicStatus(subtask.getEpicId());
         }
 
         return id;
@@ -178,17 +174,15 @@ public class TaskManager {
             Epic epic = epics.get(subtask.getEpicId());
             if (epic != null) {
                 epic.getSubtaskIds().remove(Integer.valueOf(subtaskId));
-                updateEpic(epic);
+                updateEpicStatus(subtask.getEpicId());
             }
         }
     } // - 5
 
     // Получение всех подзадач
     public ArrayList<Task> getAllSubTasks() {
-        ArrayList<Task> returnSub = new ArrayList<>();
-        returnSub.addAll(subtasks.values());
-        return returnSub;
-    } // - 6
+        return new ArrayList<>(subtasks.values());
+    }
 
 
     // Удаление всех подзадач
@@ -215,13 +209,7 @@ public class TaskManager {
         }
         return subtaskList;
     }
-    public ArrayList<Task> getAllItems() {
-        ArrayList<Task> allItems = new ArrayList<>();
-        allItems.addAll(tasks.values());
-        allItems.addAll(epics.values());
-        allItems.addAll(subtasks.values());
-        return allItems;
-    }
+
 
 
 }

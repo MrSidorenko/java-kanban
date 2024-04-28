@@ -3,6 +3,7 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -48,8 +49,14 @@ public class Main {
 
         // Вывод всех задач
         System.out.println("Все задачи после обновления:");
-        for (Task task : manager.getAllItems()) {
+        ArrayList<Task> allTasks = new ArrayList<>();
+        allTasks.addAll(manager.getTasks());
+        allTasks.addAll(manager.getAllEpics());
+        allTasks.addAll(manager.getAllSubTasks());
+
+        for (Task task : allTasks) {
             System.out.println(task.getType() + " " + task.getTitle() + " - " + task.getStatus());
         }
+
     }
 }
