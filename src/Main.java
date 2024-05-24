@@ -1,3 +1,4 @@
+import manager.InMemoryTaskManager;
 import manager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = new InMemoryTaskManager();
 
         // Добавляем обычную задачу
         Task task1 = new Task("Переезд", "Переезд в новую квартиру");

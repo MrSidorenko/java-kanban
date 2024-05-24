@@ -15,4 +15,11 @@ public class Subtask extends Task {
     public int getEpicId() {
         return epicId;
     }
+
+    public void setEpicId(int epicId) {
+        if (epicId == this.getId()) {
+            throw new IllegalArgumentException("Сабтаска не может быть выставлена эпиком для самой себя");
+        }
+        this.epicId = epicId;
+    }
 }
