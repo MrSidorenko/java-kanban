@@ -8,7 +8,11 @@ public class Epic extends Task {
     public Epic(String title, String description) {
         super(title, description);
         this.status = TaskStatus.NEW;
-        this.type = TaskType.EPIC;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
     }
 
 

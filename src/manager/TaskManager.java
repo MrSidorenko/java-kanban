@@ -3,69 +3,48 @@ package manager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
-import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    // ниже представлены методы для task
-    int addTask(Task task) // - 1
-    ;
+    // методы для task
+    int addTask(Task task);
 
-    Task getTask(int id) // - 2
-    ;
+    Task getTask(int id);
 
     void updateTask(Task updatedTask);
 
-    void removeTask(int taskId) // - 4
-    ;
+    void removeTask(int taskId);
 
-    ArrayList<Task> getTasks() // - 5
-    ;
+    ArrayList<Task> getTasks();
 
-    void removeAllTasks() // - 6
-    ;
+    void removeAllTasks();
 
-    // ниже представлены все методы для работы tasks.Epic
-    int addEpic(Epic epic) // - 1
-    ;
+    // методы для tasks.Epic
+    int addEpic(Epic epic);
 
-    // Получение эпика по ID
-    Epic getEpic(int id) // - 2
-    ;
+    Epic getEpic(int id);
 
-    // Обновление эпика
     void updateEpic(Epic updatedEpic);
 
-    // Удаление эпика
     void removeEpic(int epicId);
 
-    ArrayList<Epic> getAllEpics() // - 5
-    ;
+    ArrayList<Epic> getAllEpics();
 
     void removeAllEpics();
 
-    // ниже представлены все методы для сабтасков
-    int addSubtask(Subtask subtask) // - 1
-    ;
+    // методы для сабтасков
+    int addSubtask(Subtask subtask);
 
-    Subtask getSubtask(int id) // - 2
-    ;
+    Subtask getSubtask(int id);
 
-    // Обновление подзадачи
-    void updateSubtask(Subtask updatedSubtask);    // - 3
-    ;
+    void updateSubtask(Subtask updatedSubtask);
 
-    // Удаление подзадачи
-    void removeSubtask(int subtaskId); // - 5
+    void removeSubtask(int subtaskId);
 
-
-    // Получение всех подзадач
     ArrayList<Task> getAllSubTasks();
 
-    // Удаление всех подзадач
     void removeAllSubtasks();
 
-    List<Task> getHistory();
 }

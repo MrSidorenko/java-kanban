@@ -1,12 +1,8 @@
-package test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
 import manager.TaskManager;
 import manager.InMemoryTaskManager;
-
-
 
 public class TaskTest {
 
@@ -32,5 +28,7 @@ public class TaskTest {
         Task retrievedTask = manager.getTask(task.getId());
         assertEquals(savedTaskBeforeChange, retrievedTask, "Задание не должно меняться после добавления");
     }
+
+
 
 }

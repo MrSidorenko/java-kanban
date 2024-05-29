@@ -7,17 +7,15 @@ public class Task {
     protected String title;
     protected String description;
     protected TaskStatus status;
-    protected TaskType type;
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
         this.status = TaskStatus.NEW;
-        this.type = TaskType.TASK;
     }
 
     public TaskType getType() {
-        return type;
+        return TaskType.TASK;
     }
 
     public int getId() {
@@ -51,7 +49,6 @@ public class Task {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
-
 
     @Override
     public boolean equals(Object obj) {
