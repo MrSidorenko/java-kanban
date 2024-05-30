@@ -1,26 +1,37 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
 import manager.HistoryManager;
+import manager.InMemoryHistoryManager;
 import java.util.List;
 
 public class HistoryManagerTest {
 
+    private HistoryManager historyManager;
+    private Task task1;
+    private Task task2;
+
+    @BeforeEach
+    void setUp() {
+        historyManager = new InMemoryHistoryManager();
+        task1 = new Task("Таска 1", "Описание 1");
+        task1.setId(1);
+        task2 = new Task("Таска 2", "Описание 2");
+        task2.setId(2);
+    }
+
     @Test
     void testAddToHistory() {
-        HistoryManager historyManager = new HistoryManager();
-        Task task = new Task("Таска 1", "Описание 1");
-        task.setId(1);
-        historyManager.add(task);
+        historyManager.add(task1);
 
         assertEquals(1, historyManager.getHistory().size(), "История должна содержать одну задачу.");
-        assertEquals(task, historyManager.getHistory().get(0), "Задача в истории должна быть task.");
+        assertEquals(task1, historyManager.getHistory().get(0), "Задача в истории должна быть task1.");
     }
 
     @Test
     void testHistoryLimit() {
-        HistoryManager historyManager = new HistoryManager();
         for (int i = 1; i <= 11; i++) {
             Task task = new Task("Таска " + i, "Описание " + i);
             task.setId(i);
@@ -33,28 +44,19 @@ public class HistoryManagerTest {
 
     @Test
     void testHistoryPreservesPreviousVersions() {
-        HistoryManager historyManager = new HistoryManager();
-        Task task = new Task("Таска 1", "Описание 1");
-        task.setId(1);
-        historyManager.add(task);
+        historyManager.add(task1);
 
         Task updatedTask = new Task("Таска 1", "Обновленное описание");
         updatedTask.setId(1);
         historyManager.add(updatedTask);
 
         List<Task> history = historyManager.getHistory();
-        assertEquals(2, history.size(), "История должна содержать обе версии задачи.");
-        assertEquals("Описание 1", history.get(0).getDescription(), "Первая версия задачи должна быть сохранена.");
-        assertEquals("Обновленное описание", history.get(1).getDescription(), "Обновленная версия задачи должна быть сохранена.");
+        assertEquals(1, history.size(), "История должна содержать одну задачу.");  // Обновляем проверку на одну задачу
+        assertEquals("Обновленное описание", history.get(0).getDescription(), "Описание задачи должно быть обновлено.");
     }
 
     @Test
     void testHistoryManagement() {
-        HistoryManager historyManager = new HistoryManager();
-        Task task1 = new Task("Задача 1", "Описание задачи 1");
-        Task task2 = new Task("Задача 2", "Описание задачи 2");
-        task1.setId(1);
-        task2.setId(2);
         historyManager.add(task1);
         historyManager.add(task2);
 

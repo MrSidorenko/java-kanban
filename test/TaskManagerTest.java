@@ -6,14 +6,11 @@ import tasks.Epic;
 import tasks.Task;
 import manager.TaskManager;
 import manager.InMemoryTaskManager;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import manager.HistoryManager;
 import manager.Managers;
 
 public class TaskManagerTest {
     TaskManager manager;
-    HistoryManager historyManager;
 
     @BeforeEach
     void setUp() {
@@ -92,4 +89,5 @@ public class TaskManagerTest {
         assertTrue(manager.getTasks().isEmpty(), "Все задачи должны быть удалены.");
 
     }
+
 }

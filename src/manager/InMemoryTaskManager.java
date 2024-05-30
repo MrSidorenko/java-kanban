@@ -7,13 +7,16 @@ import tasks.TaskStatus;
 
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HistoryManager historyManager = new HistoryManager();
+    private final HistoryManager historyManager;
+
+    public InMemoryTaskManager() {
+        this.historyManager = Managers.getDefaultHistory();
+    }
     private int currentId = 1;
 
     // методы для task
@@ -28,9 +31,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(int id) {
         Task task = tasks.get(id);
-        if (task != null) {
-            historyManager.add(task);
-        }
+        addToHistory(task);
         return task;
     }
 
@@ -68,9 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpic(int id) {
         Epic epic = epics.get(id);
-        if (epic != null) {
-            historyManager.add(epic);
-        }
+        addToHistory(epic);
         return epic;
     }
 
@@ -94,7 +93,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             // Удаляем все подзадачи эпика
             ArrayList<Integer> subtaskIds = new ArrayList<>(epic.getSubtaskIds());
-            for (Integer subtaskId : epic.getSubtaskIds()) {
+            for (Integer subtaskId : subtaskIds) {
                 subtasks.remove(subtaskId);
             }
         }
@@ -165,9 +164,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = subtasks.get(id);
-        if (subtask != null) {
-            historyManager.add(subtask);
-        }
+        addToHistory(subtask);
         return subtask;
     }
 
@@ -220,4 +217,10 @@ public class InMemoryTaskManager implements TaskManager {
         return subtaskList;
     }
 
+    // Метод для добавления задачи в историю
+    private void addToHistory(Task task) {
+        if (task != null) {
+            historyManager.add(task);
+        }
+    }
 }

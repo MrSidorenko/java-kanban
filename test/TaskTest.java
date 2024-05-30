@@ -28,7 +28,4 @@ public class TaskTest {
         Task retrievedTask = manager.getTask(task.getId());
         assertEquals(savedTaskBeforeChange, retrievedTask, "Задание не должно меняться после добавления");
     }
-
-
-
 }
