@@ -5,6 +5,7 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     // методы для task
@@ -45,5 +46,7 @@ public interface TaskManager {
     ArrayList<Task> getAllSubTasks();
 
     void removeAllSubtasks();
+
+    List<Task> getHistory();
 
 }

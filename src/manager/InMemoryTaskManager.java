@@ -7,6 +7,7 @@ import tasks.TaskStatus;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -17,6 +18,7 @@ public class InMemoryTaskManager implements TaskManager {
     public InMemoryTaskManager() {
         this.historyManager = Managers.getDefaultHistory();
     }
+
     private int currentId = 1;
 
     // методы для task
@@ -31,7 +33,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTask(int id) {
         Task task = tasks.get(id);
-        addToHistory(task);
+        historyManager.add(task);
         return task;
     }
 
@@ -69,7 +71,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getEpic(int id) {
         Epic epic = epics.get(id);
-        addToHistory(epic);
+        historyManager.add(epic);
         return epic;
     }
 
@@ -164,7 +166,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtask(int id) {
         Subtask subtask = subtasks.get(id);
-        addToHistory(subtask);
+        historyManager.add(subtask);
         return subtask;
     }
 
@@ -217,10 +219,9 @@ public class InMemoryTaskManager implements TaskManager {
         return subtaskList;
     }
 
-    // Метод для добавления задачи в историю
-    private void addToHistory(Task task) {
-        if (task != null) {
-            historyManager.add(task);
-        }
+    // Метод для получения истории
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 }

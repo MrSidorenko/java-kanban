@@ -11,7 +11,9 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        history.removeIf(t -> t.getId() == task.getId()); // Удаляем задачу с таким же ID
+        if (task == null) {
+            return;
+        }
         if (history.size() >= HISTORY_LIMIT) {
             history.removeFirst();
         }
