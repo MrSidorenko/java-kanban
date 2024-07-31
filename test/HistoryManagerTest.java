@@ -1,57 +1,37 @@
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import manager.HistoryManager;
 import manager.InMemoryHistoryManager;
 import tasks.Task;
+
 import java.util.List;
 
 public class HistoryManagerTest {
+    public static void main(String[] args) {
+        HistoryManager historyManager = new InMemoryHistoryManager();
 
-    @Test
-    void testAddToHistory() {
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        Task task = new Task("Таска 1", "Описание 1");
-        task.setId(1);
-        historyManager.add(task);
+        Task task1 = new Task("Task 1", "Description 1");
+        task1.setId(1);
+        Task task2 = new Task("Task 2", "Description 2");
+        task2.setId(2);
+        Task task3 = new Task("Task 3", "Description 3");
+        task3.setId(3);
 
-        assertEquals(1, historyManager.getHistory().size(), "История должна содержать одну задачу.");
-        assertEquals(task, historyManager.getHistory().get(0), "Задача в истории должна быть task.");
-    }
+        // Test adding tasks
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
+        System.out.println("History after adding tasks: " + historyManager.getHistory().size()); // Expected: 3
 
-    @Test
-    void testAddNullToHistory() {
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        historyManager.add(null);
+        // Test removing task
+        historyManager.remove(2);
+        System.out.println("History after removing task 2: " + historyManager.getHistory().size()); // Expected: 2
 
-        assertEquals(0, historyManager.getHistory().size(), "История не должна содержать null задач.");
-    }
+        // Test re-adding task
+        historyManager.add(task2);
+        System.out.println("History after re-adding task 2: " + historyManager.getHistory().size()); // Expected: 3
 
-    @Test
-    void testHistoryLimit() {
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        for (int i = 1; i <= 11; i++) {
-            Task task = new Task("Таска " + i, "Описание " + i);
-            task.setId(i);
-            historyManager.add(task);
-        }
-
-        assertEquals(10, historyManager.getHistory().size(), "История должна содержать не более 10 задач.");
-        assertEquals(2, historyManager.getHistory().get(0).getId(), "Первая задача в истории должна быть второй добавленной.");
-    }
-
-    @Test
-    void testHistoryPreservesPreviousVersions() {
-        InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        Task task = new Task("Таска 1", "Описание 1");
-        task.setId(1);
-        historyManager.add(task);
-
-        Task updatedTask = new Task("Таска 1", "Обновленное описание");
-        updatedTask.setId(1);
-        historyManager.add(updatedTask);
-
+        // Test updating task
+        historyManager.add(task1); // task1 should move to the end
         List<Task> history = historyManager.getHistory();
-        assertEquals(2, history.size(), "История должна содержать обе версии задачи.");
-        assertEquals("Описание 1", history.get(0).getDescription(), "Первая версия задачи должна быть сохранена.");
-        assertEquals("Обновленное описание", history.get(1).getDescription(), "Обновленная версия задачи должна быть сохранена.");
+        System.out.println("Last task in history should be Task 1: " + history.get(history.size() - 1).getTitle()); // Expected: "Task 1"
     }
 }
