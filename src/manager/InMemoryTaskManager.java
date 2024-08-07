@@ -25,8 +25,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int addTask(Task task) {
         int id = currentId++;
-        task.setId(id);
-        tasks.put(id, task);
+        Task taskCopy = new Task(task);
+        taskCopy.setId(id);
+        tasks.put(id, taskCopy);
         return id;
     }
 
@@ -34,8 +35,11 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTask(int id) {
         Task task = tasks.get(id);
         historyManager.add(task);
-        return task;
+        // Возвращаем копию задачи
+        return new Task(task);
     }
+
+
 
     @Override
     public void updateTask(Task updatedTask) {
