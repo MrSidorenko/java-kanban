@@ -13,6 +13,7 @@ public class Task {
         this.description = description;
         this.status = TaskStatus.NEW;
     }
+
     public Task(Task other) {
         if (other == null) {
             throw new IllegalArgumentException("Cannot copy from a null task");
