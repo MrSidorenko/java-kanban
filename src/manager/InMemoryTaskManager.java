@@ -12,7 +12,7 @@ import java.util.List;
 public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
+    private HashMap<Integer, Epic>   epics = new HashMap<>();
     private final HistoryManager historyManager;
 
     public InMemoryTaskManager() {
@@ -25,9 +25,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int addTask(Task task) {
         int id = currentId++;
-        Task taskCopy = new Task(task);
-        taskCopy.setId(id);
-        tasks.put(id, taskCopy);
+        task.setId(id);  // Убираем создание копии
+        tasks.put(id, task);  // Сохраняем оригинал задачи
         return id;
     }
 
@@ -35,8 +34,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTask(int id) {
         Task task = tasks.get(id);
         historyManager.add(task);
-        // Возвращаем копию задачи
-        return new Task(task);
+        return task;  // Убираем создание копии
     }
 
 
@@ -51,6 +49,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTask(int taskId) {
         tasks.remove(taskId);
+        historyManager.remove(taskId);  // Добавляем удаление из истории
     }
 
     @Override
